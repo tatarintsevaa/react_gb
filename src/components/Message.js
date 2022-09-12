@@ -2,23 +2,21 @@ import React from 'react';
 import styled from "@emotion/styled";
 
 
-const Message = ({name}) => {
+const Message = ({message}) => {
     const Message = styled.div`
-      padding: 20px;
-      background-color: #0DA1A6;
+      padding: 10px;
+      background-color: ${() => message.author === 'bot' ? '#abc95a' : '#0DA1A6'} ;
       font-size: 24px;
       color: #FFF;
       border-radius: 10px;
-      transition: 0.3s ease-in;
-      &:hover {
-        background-color: #fff;
-        border: 1px solid #0DA1A6;
-        color: #0DA1A6;
-        cursor: pointer;
-      }
+      align-self:  ${() => message.author === 'bot' ? 'end' : 'start'};
+      margin-bottom: 5px;
+      margin-top: 5px;
+      max-width: 70%;
+      word-break: break-all;
     `
     return (
-        <Message> Привет, {name} !</Message>
+        <Message className={message.author}>{message.text}</Message>
     );
 };
 
