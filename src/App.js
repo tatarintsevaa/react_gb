@@ -1,49 +1,40 @@
 import './App.css';
 import Message from "./components/Message";
 import {useEffect, useRef, useState} from "react";
-import styled from "@emotion/styled";
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
+import {IconButton, InputBase, Paper, Box, List, ListSubheader, ThemeProvider} from "@mui/material";
+import SendIcon from '@mui/icons-material/Send';
+import ChatItem from "./components/ChatItem";
+import {createTheme} from "@mui/material";
 
-const Input = styled.input`
-      padding: 10px;
-      border-radius: 10px 0 0 10px;
-      border-color: #469fc9;
-      border-style: solid;
-      &:focus-visible {
-        outline: none;
-      }
-      font-size: 24px;
-    `
-
-const Button = styled.button`
-  padding: 10px;
-  border-radius: 0 10px 10px 0;
-  border-color: #469fc9;
-  border-style: solid;
-  border-left: none;
-  color: #fff;
-  background-color: #469fc9;
-  font-size: 24px;
-  transition: 0.2s ease-in;
-  &:hover {
-    background-color: #3f8fb6;
-    cursor: pointer;
-  }
-`
-
-const Form = styled.div`
-  margin-bottom: 50px;
-  margin-top: 50px;
-`
+const theme = createTheme({
+    palette: {
+        primary: {
+            main: "#0DA1A6"
+        },
+        secondary: {
+            main: '#abc95a'
+        },
+    },
+});
 
 function App() {
     const [messageList, setMessageList] = useState([]);
+    const [chatList, setChatList] = useState([
+        {id: 1, name: '1st chat'},
+        {id: 2, name: '2nd chat'},
+        {id: 3, name: '3d chat'}
+    ]);
     const [inputValue, setInputValue] = useState('');
     let inputRef = useRef(null);
 
     useEffect(() => {
         const lastMessage = messageList[messageList.length - 1];
         lastMessage?.author === 'user' && setTimeout(() => {
-            setMessageList([...messageList, {author: 'bot', text: 'message delivered'}]);
+            addMessage('bot', 'message delivered')
         }, 1000)
     }, [messageList])
 
@@ -51,27 +42,65 @@ function App() {
         setInputValue(evt.target.value);
     }
 
-    const addMessage = () => {
-        inputValue !== '' && setMessageList([...messageList, {text: inputValue, author: 'user'}]);
+    const handleClickSendButton = () => {
+        inputValue !== '' && addMessage('user', inputValue);
         setInputValue('');
         inputRef.focus();
     }
 
+    const addMessage = (author, text) => {
+        setMessageList([...messageList, {id: getLastId(messageList) + 1, text: text, author: author}])
+    }
+
+    const getLastId = (list) => {
+        if (list.length) {
+            return list[list.length - 1]?.id
+        }
+        return null;
+    }
+
     return (
-        <div className="App">
-            <div className="container">
-                <div className="wrapper">
-                    {messageList.map((message, index) => <Message message={message} key={index}/>)}
-                </div>
-                <Form>
-                    <Input ref={ref => inputRef = ref}
-                           value={inputValue}
-                           onChange={handleChange}
-                           onKeyDown={(evt) => {evt.key === 'Enter' && addMessage()}}/>
-                    <Button onClick={addMessage} >Send</Button>
-                </Form>
+        <ThemeProvider theme={theme}>
+            <div className="App">
+                <Box className={'wrapper'}>
+                    <List
+                        sx={{minWidth: '250px'}}
+                        subheader={
+                            <ListSubheader component="div" id="list-subheader" sx={{textAlign: 'start'}}>
+                                Chat list
+                            </ListSubheader>
+                        }
+                    >
+                        {chatList.map((chat) => <ChatItem chat={chat} key={chat.id}/>)}
+                    </List>
+                    <Box sx={{flex: 1}}>
+                        <Box className="message-wrapper">
+                            {messageList.map((message) => <Message message={message} key={message.id}/>)}
+                        </Box>
+                        <Paper sx={{width: '100%', height: '40px', display: 'flex', justifyContent: 'space-around'}}>
+                            <InputBase
+                                sx={{width: '90%', ml: 1, mr: 1, flex: 1, minWidth: '100px'}}
+                                placeholder="Inter your message text"
+                                inputProps={{'aria-label': 'search google maps'}}
+                                ref={ref => inputRef = ref}
+                                onChange={handleChange}
+                                onKeyDown={(evt) => {
+                                    evt.key === 'Enter' && handleClickSendButton()
+                                }}
+                                value={inputValue}
+                            />
+                            <IconButton
+                                sx={{mr: 1, width: '40px'}}
+                                color="primary"
+                                onClick={handleClickSendButton}
+                            >
+                                <SendIcon/>
+                            </IconButton>
+                        </Paper>
+                    </Box>
+                </Box>
             </div>
-        </div>
+        </ThemeProvider>
     );
 }
 
