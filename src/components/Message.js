@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from "@emotion/styled";
 import {useTheme} from "@mui/material";
+import PropTypes from "prop-types";
 
 
 const Message = ({message}) => {
@@ -20,5 +21,13 @@ const Message = ({message}) => {
         <Message>{message.text}</Message>
     );
 };
+
+Message.propTypes = {
+    message: PropTypes.shape({
+        id: PropTypes.number,
+        text: PropTypes.string,
+        author: PropTypes.string,
+    })
+}
 
 export default Message;
