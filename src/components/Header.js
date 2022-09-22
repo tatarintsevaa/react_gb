@@ -6,14 +6,15 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import {Button, Divider, Drawer, List, ListItem, ListItemButton, ListItemText} from "@mui/material";
-import {Link} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 const drawerWidth = 240;
-const navItems = [{name: 'Chats', href: '/'}, {name: 'Profile', href: '/profile'}];
+const navItems = [{name: 'Chats', href: '/chat/1'}, {name: 'Profile', href: '/'}];
 
 const Header = (props) => {
     const { window } = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
+    const navigate = useNavigate();
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
@@ -28,10 +29,8 @@ const Header = (props) => {
             <List>
                 {navItems.map((item) => (
                     <ListItem key={item.name} disablePadding>
-                        <ListItemButton sx={{ textAlign: 'center' }}>
-                            <Link to={item.href}>
-                                <ListItemText primary={item.name} />
-                            </Link>
+                        <ListItemButton sx={{ textAlign: 'center' }} onClick={() => navigate(item.href)}>
+                            <ListItemText primary={item.name} />
                         </ListItemButton>
                     </ListItem>
                 ))}
@@ -43,7 +42,7 @@ const Header = (props) => {
 
     return (
         <>
-            <AppBar position="static">
+            <AppBar position="static" sx={{mb:1}}>
                 <Toolbar>
                     <IconButton
                         color="inherit"
@@ -63,8 +62,8 @@ const Header = (props) => {
                     </Typography>
                     <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
                         {navItems.map((item) => (
-                            <Button key={item.name} sx={{ color: '#fff' }}>
-                                <Link to={item.href}>{item.name}</Link>
+                            <Button key={item.name} sx={{ color: '#fff' }} onClick={() => navigate(item.href)}>
+                                {item.name}
                             </Button>
                         ))}
                     </Box>

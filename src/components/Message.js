@@ -3,7 +3,6 @@ import styled from "@emotion/styled";
 import {useTheme} from "@mui/material";
 import PropTypes from "prop-types";
 
-
 const Message = ({message}) => {
     const theme = useTheme();
     const Message = styled.div`
