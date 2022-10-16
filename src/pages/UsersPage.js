@@ -1,10 +1,9 @@
 import React from 'react';
+import UsersTable from "../components/UsersTable";
 
 const UsersPage = () => {
     return (
-        <div>
-            users
-        </div>
+        <UsersTable />
     );
 };
 

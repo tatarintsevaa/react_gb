@@ -2,13 +2,14 @@ import {configureStore, combineReducers} from "@reduxjs/toolkit";
 import chatsSlice from "./chatsSlice";
 import messageListSlice from "./messageListSlice";
 import {botAnswer} from "../asyncActions/botAnswer";
-import logger from "redux-logger";
 import storage from 'redux-persist/lib/storage';
 import {persistReducer} from "redux-persist";
+import dataSlice from "./dataSlice";
 
 const rootReducer = combineReducers({
     chatList: chatsSlice,
-    messageList: messageListSlice
+    messageList: messageListSlice,
+    data: dataSlice
 })
 
 const persistConfig = {
@@ -20,5 +21,5 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
     reducer: persistedReducer,
-    middleware: getDefaultMiddleware => getDefaultMiddleware().concat([botAnswer, logger])
+    middleware: getDefaultMiddleware => getDefaultMiddleware().concat([botAnswer])
 })
