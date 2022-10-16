@@ -4,6 +4,7 @@ import Layout from "./Layout";
 import ChatsPage from "../pages/ChatsPage";
 import ProfilePage from "../pages/ProfilePage";
 import ChatBox from "./ChatBox";
+import UsersPage from "../pages/UsersPage";
 
 
 const App = () => {
@@ -14,6 +15,7 @@ const App = () => {
                 <Route path={'/chat'} element={<ChatsPage/>}>
                     <Route path={':chatId'} element={<ChatBox />} />
                 </Route>
+                <Route path={'/users'} element={<UsersPage />} />
             </Route>
         </Routes>
     );

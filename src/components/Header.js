@@ -9,7 +9,7 @@ import {Button, Divider, Drawer, List, ListItem, ListItemButton, ListItemText} f
 import {useNavigate} from "react-router-dom";
 
 const drawerWidth = 240;
-const navItems = [{name: 'Chats', href: '/chat/1'}, {name: 'Profile', href: '/'}];
+const navItems = [{name: 'Chats', href: '/chat/1'}, {name: 'Profile', href: '/'}, {name: 'Users', href: '/users'}];
 
 const Header = (props) => {
     const { window } = props;

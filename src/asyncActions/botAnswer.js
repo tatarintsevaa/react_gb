@@ -1,6 +1,5 @@
 import {addMessage} from "../store/messageListSlice";
 
-
 export const botAnswer = store => next => action => {
     const {dispatch} = store;
     setTimeout(() => {
@@ -10,6 +9,5 @@ export const botAnswer = store => next => action => {
     }, 1000)
 
     return next(action);
-} // это для примера, потом просто сделаю через thank
-
+}
 
