@@ -5,6 +5,7 @@ import SendIcon from "@mui/icons-material/Send";
 import {useDispatch, useSelector} from "react-redux";
 import {useParams} from "react-router-dom";
 import {addMessage} from "../store/messageListSlice";
+import {botAnswer} from "../asyncActions/botAnswer";
 
 const ChatBox = () => {
     const {chatId} = useParams();
@@ -13,12 +14,12 @@ const ChatBox = () => {
     const [inputValue, setInputValue] = useState('');
     let inputRef = useRef(null);
 
-    useEffect(() => {
-        const lastMessage = messageList[messageList.length - 1];
-        lastMessage?.author === 'User' && setTimeout(() => {
-            dispatch(addMessage({chatId: chatId, author: 'bot', text: 'Message delivered'}))
-        }, 1000)
-    }, [messageList])
+    // useEffect(() => {
+    //     const lastMessage = messageList[messageList.length - 1];
+    //     lastMessage?.author === 'User' && setTimeout(() => {
+    //         dispatch(addMessage({chatId: chatId, author: 'bot', text: 'Message delivered'}))
+    //     }, 1000)
+    // }, [messageList])
 
     const handleChange = (evt) => {
         setInputValue(evt.target.value);
@@ -28,6 +29,7 @@ const ChatBox = () => {
         inputValue !== '' && dispatch(addMessage({chatId: chatId, text: inputValue, author: 'User'}));
         setInputValue('');
         inputRef.focus();
+        // dispatch(botAnswer({chatId: chatId, text: 'message delivered', author: 'bot'}));
     }
 
     return (
