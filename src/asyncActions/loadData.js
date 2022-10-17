@@ -1,4 +1,4 @@
-import {addUsers, setError} from "../store/dataSlice";
+import {addUsers, setError, setErrorMessage} from "../store/dataSlice";
 
 export const loadData = () => {
     return async dispatch => {
@@ -8,8 +8,8 @@ export const loadData = () => {
            dispatch(addUsers(users))
            dispatch(setError(false))
        } catch (error) {
-           console.log(error);
-           dispatch(setError(true))
+           dispatch(setError(true));
+           dispatch(setErrorMessage(error.message));
        }
     }
 }
