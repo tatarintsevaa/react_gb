@@ -37,8 +37,6 @@ const App = () => {
                 <Route path={'/login'} element={<LoginPage />}/>
                 <Route path={'/auth'} element={<AuthPage />}/>
             </Route>
-
-
         </Routes>
     );
 };

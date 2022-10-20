@@ -23,7 +23,9 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
     reducer: persistedReducer,
-    middleware: getDefaultMiddleware => getDefaultMiddleware().concat([botAnswer])
+    middleware: getDefaultMiddleware => getDefaultMiddleware({
+        serializableCheck: false
+    }).concat([botAnswer])
 })
 
 
