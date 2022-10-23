@@ -5,11 +5,13 @@ import {botAnswer} from "../asyncActions/botAnswer";
 import storage from 'redux-persist/lib/storage';
 import {persistReducer} from "redux-persist";
 import dataSlice from "./dataSlice";
+import authSlice from "./authSlice";
 
 const rootReducer = combineReducers({
     chatList: chatsSlice,
     messageList: messageListSlice,
-    data: dataSlice
+    data: dataSlice,
+    auth: authSlice
 })
 
 const persistConfig = {
@@ -21,5 +23,9 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
     reducer: persistedReducer,
-    middleware: getDefaultMiddleware => getDefaultMiddleware().concat([botAnswer])
+    middleware: getDefaultMiddleware => getDefaultMiddleware({
+        serializableCheck: false
+    }).concat([botAnswer])
 })
+
+

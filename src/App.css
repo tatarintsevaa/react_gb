@@ -28,4 +28,11 @@
   height: calc(100% - 40px);
 }
 
+.login-wrapper {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 
